@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TechMart OMS</title>
+<meta name="description" content="TechMart Order Management System">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">T</div><div><b>TechMart</b><small>Order Management</small></div></div>
+    <nav>
+      <button class="nav active" data-view="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav" data-view="orders">◫ <span>Orders</span></button>
+    </nav>
+    <div class="connection"><i id="dot"></i><div><b id="connection">Checking API…</b><small id="host"></small></div></div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><small class="eyebrow">Operations</small><h1 id="title">Dashboard</h1></div>
+      <div class="actions"><button class="btn ghost" id="refresh">↻ Refresh</button><button class="btn primary" id="newOrder">+ New order</button></div>
+    </header>
+
+    <section id="dashboard" class="view">
+      <div class="hero"><div><small class="eyebrow">Live OMS</small><h2>Keep every order moving.</h2><p>Create, monitor, update and advance orders through the configured workflow.</p></div><span>Atlas-backed</span></div>
+      <div class="stats">
+        <article><small>Total orders</small><strong id="total">0</strong><em>All statuses</em></article>
+        <article><small>Created</small><strong id="created">0</strong><em>Awaiting confirmation</em></article>
+        <article><small>In progress</small><strong id="progress">0</strong><em>Confirmed / Packed / Shipped</em></article>
+        <article><small>Delivered</small><strong id="delivered">0</strong><em>Completed</em></article>
+      </div>
+      <div class="card"><div class="card-head"><div><h3>Recent orders</h3><p>Latest records from the OMS.</p></div><button class="link" id="allOrders">View all →</button></div><div id="recent"></div></div>
+    </section>
+
+    <section id="orders" class="view hidden">
+      <div class="toolbar"><div class="search">⌕<input id="search" placeholder="Search order ID or product…"></div><select id="filter"><option value="all">All statuses</option><option>Created</option><option>Confirmed</option><option>Packed</option><option>Shipped</option><option>Delivered</option></select></div>
+      <div class="card table-card"><div class="table-wrap"><table><thead><tr><th>Order</th><th>Product</th><th>Qty</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table"></tbody></table></div><div id="empty" class="empty hidden"><h3>No orders found</h3><p>Try another search or create a new order.</p></div></div>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="modal hidden"><div class="backdrop" data-close></div><div class="modal-card">
+  <div class="modal-head"><div><small class="eyebrow" id="modalEyebrow">New order</small><h2 id="modalTitle">Create order</h2></div><button class="x" data-close>×</button></div>
+  <form id="form">
+    <input type="hidden" id="editing">
+    <label>Order ID<input id="orderId" required maxlength="50" placeholder="e.g. LIVE002"></label>
+    <label>Product<input id="product" required maxlength="100" placeholder="e.g. Laptop"></label>
+    <label>Quantity<input id="quantity" required min="1" type="number" placeholder="1"></label>
+    <div id="formError" class="error hidden"></div>
+    <div class="modal-actions"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn primary" type="submit" id="submit">Create order</button></div>
+  </form>
+</div></div>
+
+<div id="detail" class="modal hidden"><div class="backdrop" data-detail-close></div><div class="modal-card wide">
+  <div class="modal-head"><div><small class="eyebrow">Order details</small><h2 id="detailId">—</h2></div><button class="x" data-detail-close>×</button></div>
+  <div id="detailBody"></div>
+</div></div>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

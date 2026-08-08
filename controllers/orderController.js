@@ -29,15 +29,13 @@ async function createOrder(req, res) {
         });
 
     }
-    catch(error){
+    catch (error) {
+    console.error("🔥 CREATE ORDER ERROR:", error);
 
-        console.log(error);
-
-        res.status(500).send({
-            error:"Internal Server Error"
-        });
-
-    }
+    res.status(500).json({
+        error: "Internal Server Error"
+    });
+      }
 
 }
 

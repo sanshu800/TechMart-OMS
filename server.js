@@ -1,6 +1,14 @@
 require("dotenv").config();
 
 const express = require("express");
+const mongoose = require("mongoose");
+
+// Frontend
+const path = require("path"); 
+
+
+// Import Routes
+const orderRoutes = require("./routes/orderRoutes");
 
 
 const app = express();
@@ -11,17 +19,16 @@ require("./config/database");
 
 
 
-// Import Routes
-const orderRoutes = require("./routes/orderRoutes");
 
 // Middleware
 app.use(express.json());
+//Frontend
+app.use(express.static(path.join(__dirname, "public")));
 
 
-// Home Route
-app.get("/", (req, res) => {
-    res.send("OMS Server Running");
-});
+app.use("/orders", orderRoutes);
+
+
 
 // Health Check
 app.get("/health", (req, res) => {
@@ -31,13 +38,9 @@ app.get("/health", (req, res) => {
 });
 
 
- // Import Routes
-
-app.use("/orders", orderRoutes);
-
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`🚀 TechMart OMS running on port ${PORT}`);
 });
